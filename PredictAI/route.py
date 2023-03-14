@@ -60,6 +60,7 @@ def stockprediction():
 
 @app.route('/stockprices', methods=['GET','POST'])
 def currentstock():
+<<<<<<< HEAD
 
     comp = Companies.query.filter_by(Date='2023-03-08').add_columns(Companies.img,Companies.companyname,Companies.symbol,Companies.close_,Companies.Volume)\
         .order_by(desc(Companies.close_)).all()
@@ -72,12 +73,16 @@ def currentstock():
 
 
 
+=======
+>>>>>>> parent of 8362123 (CurrentPrices working as intended with sql)
     if request.method == 'POST':
       Ticker_Name = request.form.get('search_stock_price').lower()
       if len(Ticker_Name) == 0:
         return redirect('/404')
-      return redirect(url_for('ticker',Ticker_Name=Ticker_Name,comp=comp))
-    return render_template('stock_prices.html',comp=comp)
+      return redirect(url_for('ticker',Ticker_Name=Ticker_Name))
+    else:
+        pass
+    return render_template('stock_prices.html')
 
 
 @app.route('/subscription')
@@ -104,6 +109,24 @@ def logout():
 def account():
    
    return render_template('account.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -140,6 +163,8 @@ def ticker(Ticker_Name):
     PriceChange  =   MetaData["09. change"]
     PriceChangePercentage  =   MetaData["10. change percent"]
     volume = f'{int(Volume):,d}' #to make decimals -> 50000000 -> 50,000,000
+    
+
     return render_template('Ticker.html',company_name=company_name,
     Ticker_Name=Ticker_Name,Price=Price, volume=volume,DateofTrade=DateofTrade,
     PriceChangePercentage=PriceChangePercentage)
